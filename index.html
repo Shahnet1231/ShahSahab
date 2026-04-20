@@ -1929,6 +1929,13 @@ Shukriya! 🙏</textarea>
     <div><div class="page-title">📋 Activity Log</div><div class="page-sub">Har kaam ka record — 6 mahine auto-delete</div></div>
     <button class="new-btn" style="background:#ef4444" onclick="clearOldLogs()">🗑️ Purane Saaf Karo</button>
   </div>
+  <!-- Date filter + delete -->
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;background:rgba(255,255,255,0.85);padding:10px 12px;border-radius:10px;border:1px solid rgba(0,135,235,0.10)">
+    <label style="font-size:11px;font-weight:700;color:#6b7280">📅 Date:</label>
+    <input type="date" id="logDateFilter" class="ir-inp" style="padding:5px 10px;font-size:12px;border-radius:8px;border:1.5px solid #e5e7eb;font-family:inherit" onchange="renderActivityLog()">
+    <button onclick="clearLogByDate()" style="background:#fee2e2;color:#dc2626;border:1.5px solid #fecaca;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">🗑️ Is Date Ka Delete Karo</button>
+    <button onclick="document.getElementById('logDateFilter').value='';renderActivityLog()" style="background:#f3f4f6;color:#6b7280;border:1px solid #e5e7eb;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit">✕ Filter Hatao</button>
+  </div>
   <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
     <button class="tab-btn active" id="logFilterAll" onclick="filterLog('all',this)">Sab</button>
     <button class="tab-btn" onclick="filterLog('login',this)">🔐 Login</button>
@@ -6022,6 +6029,12 @@ function renderActivityLog(){
     return e.type===_logFilter||e.status===_logFilter||
            (_logFilter==='blocked'&&e.status==='blocked');
   });
+  // Date filter
+  var dateF=document.getElementById('logDateFilter');
+  if(dateF && dateF.value){
+    var fd=dateF.value; // yyyy-mm-dd
+    data=data.filter(function(e){ return e.time && e.time.startsWith(fd); });
+  }
   if(!data.length){tbody.innerHTML='<tr><td colspan="5"><div class="empty">Koi activity nahi</div></td></tr>';return;}
   var ico={login:'\uD83D\uDD10',logout:'\uD83D\uDEAA',invoice:'\uD83E\uDDFE',purchase:'\uD83D\uDED2',return:'\u21A9\uFE0F',blocked:'\uD83D\uDEAB',settings:'\u2699\uFE0F',stock:'\uD83D\uDCE6',customer:'\uD83D\uDC65',supplier:'\uD83C\uDFED',expense:'\uD83D\uDCB8',report:'\uD83D\uDCCA'};
   tbody.innerHTML=data.slice(0,200).map(function(e){
@@ -6035,6 +6048,21 @@ function renderActivityLog(){
       '<td><span style="background:'+stBg+';color:'+stClr+';padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700">'+e.status+'</span></td>'+
       '</tr>';
   }).join('');
+}
+
+function clearLogByDate(){
+  if(!isAdmin()){toast('Sirf Admin!','error');return;}
+  var dateF=document.getElementById('logDateFilter');
+  if(!dateF||!dateF.value){toast('Pehle date select karo!','error');return;}
+  var fd=dateF.value;
+  if(!confirm(fd+' ki saari logs delete karein?')) return;
+  var before=activityLog.length;
+  activityLog=activityLog.filter(function(e){ return !e.time||!e.time.startsWith(fd); });
+  var deleted=before-activityLog.length;
+  try{localStorage.setItem('sg_activity_log',JSON.stringify(activityLog));}catch(e){}
+  dateF.value='';
+  renderActivityLog();
+  toast('✅ '+deleted+' logs delete ho gayi ('+fd+')');
 }
 
 loadActivityLog();
