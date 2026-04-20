@@ -93,7 +93,7 @@ body { background:var(--bg); min-height:100vh; color:var(--dark); }
 .welcome { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px; }
 .welcome h2 { font-size:18px; font-weight:800; color:var(--dark); }
 .welcome p { font-size:11px; color:var(--gray); margin-top:1px; }
-.qbtns { display:flex; gap:7px; }
+.qbtns { display:flex; gap:6px; flex-wrap:wrap; }
 .qb { padding:8px 14px; border-radius:var(--radius-sm); font-size:12px; font-weight:700; border:none; cursor:pointer; font-family:inherit; transition:all 0.2s; }
 .qb:hover { transform:translateY(-1px); }
 
@@ -748,11 +748,11 @@ body.dark .mobile-menu {
       <p id="todayDateStr" style="color:#9ca3af;font-size:13px;margin-top:3px"></p>
     </div>
     <div class="qbtns">
-      <button class="qb" style="background:var(--blue);color:#fff;padding:10px 20px;font-size:13px" onclick="showPage('invoice')">🧾 New Invoice</button>
-      <button class="qb" style="background:#f97316;color:#fff;padding:10px 20px;font-size:13px" onclick="showPage('purchase')">🛒 New Purchase</button>
-      <button class="qb" style="background:#10b981;color:#fff;padding:10px 18px;font-size:13px" onclick="showPage('kist')">💳 Kist</button>
-      <button class="qb" style="background:#25d366;color:#fff;padding:10px 18px;font-size:13px" onclick="showPage('reminder')">📱 Reminder</button>
-      <button class="qb" id="dashRefreshBtn" style="background:rgba(0,135,235,0.10);color:var(--blue);border:1.5px solid rgba(0,135,235,0.25);padding:10px 18px;font-size:13px" onclick="dashRefresh()">🔄 Refresh</button>
+      <button class="qb" style="background:var(--blue);color:#fff;padding:7px 12px;font-size:11px" onclick="showPage('invoice')">🧾 New Invoice</button>
+      <button class="qb" style="background:#f97316;color:#fff;padding:7px 12px;font-size:11px" onclick="showPage('purchase')">🛒 New Purchase</button>
+      <button class="qb" style="background:#10b981;color:#fff;padding:7px 12px;font-size:11px" onclick="showPage('kist')">💳 Kist</button>
+      <button class="qb" style="background:#25d366;color:#fff;padding:7px 12px;font-size:11px" onclick="showPage('reminder')">📱 Reminder</button>
+      <button class="qb" id="dashRefreshBtn" style="background:rgba(0,135,235,0.10);color:var(--blue);border:1.5px solid rgba(0,135,235,0.25);padding:7px 12px;font-size:11px" onclick="dashRefresh()">🔄 Refresh</button>
     </div>
   </div>
   <!-- GS Setup Notice -->
@@ -1612,10 +1612,6 @@ body.dark .mobile-menu {
   </div>
 </div>
 
-<!-- Powered By Footer -->
-<div style="text-align:center;padding:14px;font-size:11px;color:#9ca3af;border-top:1px solid rgba(0,135,235,0.08);margin-top:8px;background:rgba(255,255,255,0.5)">
-  Powered By <strong style="color:var(--blue-dk)">Shah Group</strong>
-</div>
 
 <div class="toast" id="toast"></div>
 
@@ -4823,7 +4819,7 @@ function deleteUser(i){
 }
 
 // ── GOOGLE SHEETS SYNC ───────────────────────────
-var gsItemsUrl='https://script.google.com/macros/s/AKfycbynJ1nbFjOJIWMHATOga3iPY058Ta4C7Bfca5C_pw63JH4Ez-6-xBzTIJz5s2_L59Slyg/exec', gsAccountsUrl='https://script.google.com/macros/s/AKfycbzWRKJF4j3s5UZNfLSCiGclvSQkiBdJLBqnRjYC-zLas6-m_TIZagIGN_aWj5pG3duH8w/exec';
+var gsItemsUrl='https://script.google.com/macros/s/AKfycbzG-fH610WE0pZn8DDrmgzntbbG1q6Idyhna42KHhLUBAb-kJL993IUzpA_Q8p6oWXcyQ/exec', gsAccountsUrl='https://script.google.com/macros/s/AKfycbzskhqXhocSCm_sb0yah_pbZm1F0i-Z3PjbaB3-ktSgdGI-n54F53lbP7smAGZkEQ5fYw/exec';
 function saveGsUrls(){
   gsItemsUrl=document.getElementById('gsItemsUrl').value.trim();
   gsAccountsUrl=document.getElementById('gsAccountsUrl').value.trim();
@@ -6623,4 +6619,10 @@ function updateReceiptPartyHead(info){
 })();
 
 </script>
+
+<!-- Powered By Footer -->
+<div style="text-align:center;padding:12px;font-size:11px;color:#9ca3af;border-top:1px solid rgba(0,135,235,0.08);background:rgba(255,255,255,0.6);margin-top:24px">
+  Powered By <strong style="color:var(--blue-dk)">Shah Group</strong>
+</div>
+
 </html>
