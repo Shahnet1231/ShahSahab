@@ -6479,7 +6479,16 @@ window.exportCSV = function(){
 };
 
 // ── OVERRIDE downloadBackup with memory fix ───────
+var BACKUP_PIN = '5110'; // ← Yahan apna 4 digit PIN daalo
+
 window.downloadBackup = function(){
+  var entered = prompt('🔐 Backup PIN daalo (4 digits):');
+  if(entered === null) return; // Cancel dabaya
+  if(entered !== BACKUP_PIN){
+    alert('❌ Galat PIN! Backup download nahi ho sakta.');
+    toast('❌ Galat PIN — backup blocked','error');
+    return;
+  }
   var d={version:'v14',date:new Date().toISOString(),
     customers:customers,suppliers:suppliers,stockItems:stockItems,
     invoiceList:invoiceList,purchaseList:purchaseList,
